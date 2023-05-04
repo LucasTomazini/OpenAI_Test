@@ -3,14 +3,14 @@ import openai
 from time import sleep
 import os
 
-pdf_file = open('EDITAL.pdf', 'rb') # carrega o arquivo
+pdf_file = open('EDITAL.pdf', 'rb') # Load PDF file
 
-pdf_reader = PyPDF2.PdfReader(pdf_file) # Le o edital
+pdf_reader = PyPDF2.PdfReader(pdf_file) # Read PDf file
 
 texto_inicio = '14.2.1.1 CONHECIMENTOS BÁSICOS'
 texto_fim = 'MapReduce.'
 
-# usca a página com o primeiro indice
+# looking for the PDF pages between first and last page (in_page and out_page)
 
 in_page =0
 out_page =0
@@ -34,7 +34,7 @@ print(texto)
 print()
 print(type(texto))
 
-### Separando o texto. Usarei o split para dividir o texto e pegarei a segunda parte do texto apenas.
+# I make use of split function to separate the pages which I desire
 
 divisor = '71 e 72.'
 
@@ -51,7 +51,7 @@ for i in range(len(texto3)):
     print()
 
 
-openai.api_key = os.environ["OPENAI_API_KEY"] # Minha chave pessoal foi configurada como chave de acesso.
+openai.api_key = os.environ["OPENAI_API_KEY"] # Personal openAI key.
 #openai.api_key = chave
 
 def perguntar_ao_GPT(pergunta):
@@ -63,7 +63,7 @@ def perguntar_ao_GPT(pergunta):
         stop=None,
         temperature=0.95,
     )
-    message = Completions.choices[0].text # pega a primeira palavra das opções de texto possiveis (de acordo com "n")
+    message = Completions.choices[0].text # get the first word present in the set of texts. According with "n"
 
     return message.strip()
 
